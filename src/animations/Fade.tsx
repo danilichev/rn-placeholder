@@ -42,23 +42,21 @@ export class Fade extends React.Component<IFade> {
 
   private start() {
     const { duration } = this.props;
-    Animated.sequence([
-      Animated.timing(this.animation, {
-        duration,
-        isInteraction,
-        toValue: END_VALUE,
-        useNativeDriver
-      }),
-      Animated.timing(this.animation, {
-        duration,
-        isInteraction,
-        toValue: START_VALUE,
-        useNativeDriver
-      })
-    ]).start(e => {
-      if (e.finished) {
-        this.start();
-      }
-    });
+    Animated.loop(
+      Animated.sequence([
+        Animated.timing(this.animation, {
+          duration,
+          isInteraction,
+          toValue: END_VALUE,
+          useNativeDriver
+        }),
+        Animated.timing(this.animation, {
+          duration,
+          isInteraction,
+          toValue: START_VALUE,
+          useNativeDriver
+        })
+      ])
+    ).start();
   }
 }
